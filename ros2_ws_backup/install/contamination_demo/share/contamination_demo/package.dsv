@@ -1,0 +1,6 @@
+source;share/contamination_demo/hook/pythonpath.ps1
+source;share/contamination_demo/hook/pythonpath.dsv
+source;share/contamination_demo/hook/pythonpath.sh
+source;share/contamination_demo/hook/ament_prefix_path.ps1
+source;share/contamination_demo/hook/ament_prefix_path.dsv
+source;share/contamination_demo/hook/ament_prefix_path.sh

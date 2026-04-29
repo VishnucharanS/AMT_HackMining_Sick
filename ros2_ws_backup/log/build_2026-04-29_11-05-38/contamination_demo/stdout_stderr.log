@@ -1,0 +1,36 @@
+running egg_info
+creating ../../build/contamination_demo/contamination_demo.egg-info
+writing ../../build/contamination_demo/contamination_demo.egg-info/PKG-INFO
+writing dependency_links to ../../build/contamination_demo/contamination_demo.egg-info/dependency_links.txt
+writing entry points to ../../build/contamination_demo/contamination_demo.egg-info/entry_points.txt
+writing requirements to ../../build/contamination_demo/contamination_demo.egg-info/requires.txt
+writing top-level names to ../../build/contamination_demo/contamination_demo.egg-info/top_level.txt
+writing manifest file '../../build/contamination_demo/contamination_demo.egg-info/SOURCES.txt'
+reading manifest file '../../build/contamination_demo/contamination_demo.egg-info/SOURCES.txt'
+writing manifest file '../../build/contamination_demo/contamination_demo.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/vishnucharan/ROS/amthack/ros2_node_hack/ros2_ws_backup/build/contamination_demo/build
+creating /home/vishnucharan/ROS/amthack/ros2_node_hack/ros2_ws_backup/build/contamination_demo/build/lib
+creating /home/vishnucharan/ROS/amthack/ros2_node_hack/ros2_ws_backup/build/contamination_demo/build/lib/contamination_demo
+copying contamination_demo/contamination_monitor_node.py -> /home/vishnucharan/ROS/amthack/ros2_node_hack/ros2_ws_backup/build/contamination_demo/build/lib/contamination_demo
+copying contamination_demo/__init__.py -> /home/vishnucharan/ROS/amthack/ros2_node_hack/ros2_ws_backup/build/contamination_demo/build/lib/contamination_demo
+running install
+running install_lib
+creating /home/vishnucharan/ROS/amthack/ros2_node_hack/ros2_ws_backup/install/contamination_demo/lib/python3.12/site-packages/contamination_demo
+copying /home/vishnucharan/ROS/amthack/ros2_node_hack/ros2_ws_backup/build/contamination_demo/build/lib/contamination_demo/contamination_monitor_node.py -> /home/vishnucharan/ROS/amthack/ros2_node_hack/ros2_ws_backup/install/contamination_demo/lib/python3.12/site-packages/contamination_demo
+copying /home/vishnucharan/ROS/amthack/ros2_node_hack/ros2_ws_backup/build/contamination_demo/build/lib/contamination_demo/__init__.py -> /home/vishnucharan/ROS/amthack/ros2_node_hack/ros2_ws_backup/install/contamination_demo/lib/python3.12/site-packages/contamination_demo
+byte-compiling /home/vishnucharan/ROS/amthack/ros2_node_hack/ros2_ws_backup/install/contamination_demo/lib/python3.12/site-packages/contamination_demo/contamination_monitor_node.py to contamination_monitor_node.cpython-312.pyc
+byte-compiling /home/vishnucharan/ROS/amthack/ros2_node_hack/ros2_ws_backup/install/contamination_demo/lib/python3.12/site-packages/contamination_demo/__init__.py to __init__.cpython-312.pyc
+running install_data
+creating /home/vishnucharan/ROS/amthack/ros2_node_hack/ros2_ws_backup/install/contamination_demo/share/ament_index
+creating /home/vishnucharan/ROS/amthack/ros2_node_hack/ros2_ws_backup/install/contamination_demo/share/ament_index/resource_index
+creating /home/vishnucharan/ROS/amthack/ros2_node_hack/ros2_ws_backup/install/contamination_demo/share/ament_index/resource_index/packages
+copying resource/contamination_demo -> /home/vishnucharan/ROS/amthack/ros2_node_hack/ros2_ws_backup/install/contamination_demo/share/ament_index/resource_index/packages
+copying package.xml -> /home/vishnucharan/ROS/amthack/ros2_node_hack/ros2_ws_backup/install/contamination_demo/share/contamination_demo
+running install_egg_info
+Copying ../../build/contamination_demo/contamination_demo.egg-info to /home/vishnucharan/ROS/amthack/ros2_node_hack/ros2_ws_backup/install/contamination_demo/lib/python3.12/site-packages/contamination_demo-0.0.0-py3.12.egg-info
+running install_scripts
+Installing another_node script to /home/vishnucharan/ROS/amthack/ros2_node_hack/ros2_ws_backup/install/contamination_demo/lib/contamination_demo
+Installing contamination_monitor_node script to /home/vishnucharan/ROS/amthack/ros2_node_hack/ros2_ws_backup/install/contamination_demo/lib/contamination_demo
+writing list of installed files to '/home/vishnucharan/ROS/amthack/ros2_node_hack/ros2_ws_backup/build/contamination_demo/install.log'

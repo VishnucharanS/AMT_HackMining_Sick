@@ -1,0 +1,3 @@
+[console_scripts]
+another_node = contamination_demo.another_file:main
+contamination_monitor_node = contamination_demo.contamination_monitor_node:main
