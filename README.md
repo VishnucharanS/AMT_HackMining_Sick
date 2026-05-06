@@ -150,7 +150,7 @@ PROJECT STRUCTURE
 ├── fusion_node.py               (Fusion logic)
 ├── Dockerfile                   (Optional)
 └── README.txt
-
+```
 
 --------------------------------------------------
 
@@ -236,4 +236,4 @@ AUTHORS
 - Kishore
 
 --------------------------------------------------
-```
+
