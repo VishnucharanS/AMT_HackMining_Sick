@@ -33,6 +33,17 @@ DEMO VIDEO
 
 --------------------------------------------------
 
+GRADCAM OUTPUT FOR STATES:
+
+NORMAL:
+![alt text](NORMAL.png)
+REDUCED:
+![alt text](REDUCED.png)
+CRITICAL:
+![alt text](CRITICAL.png)
+
+--------------------------------------------------
+
 FULL SYSTEM ARCHITECTURE
 ![alt text](<System Architecture.png>)
 
@@ -220,7 +231,7 @@ FUTURE IMPROVEMENTS
 
 AUTHORS
 
-- Vishnucharan (ML Pipeline, Extraction, Fusion)
+- Vishnucharan S
 - Utkarsh Anand
 - Saimothish
 - Kishore

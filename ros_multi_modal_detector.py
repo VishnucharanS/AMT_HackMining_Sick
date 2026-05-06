@@ -204,7 +204,8 @@ class MultiModalNode(Node):
 
         # Normalize input
         
-        range_img = (range_img / 100.0 * 255).astype(np.uint8)
+        
+        range_img = cv2.normalize(range_img, None, 0, 255, cv2.NORM_MINMAX)
         range_img = cv2.flip(range_img, 0)
         range_img = range_img.astype(np.uint8)
 
@@ -245,7 +246,7 @@ class MultiModalNode(Node):
 
         stable_class = Counter(self.history).most_common(1)[0][0]
         avg_conf = sum(self.conf_history) / len(self.conf_history)
-        classes = ["CRITICAL", "REDUCED", "CLEAN"]
+        classes = ["NORMAL", "REDUCED", "CRITICAL"]
 
         msg = Int32()
 
@@ -262,11 +263,14 @@ class MultiModalNode(Node):
         self.pred_pub.publish(msg)
         img_np = cam_tensor[0].permute(1,2,0).detach().cpu().numpy()
         img_np = (img_np * 255).astype(np.uint8)
+        range_np = lidar_tensor[0].permute(1,2,0).detach().cpu().numpy()
+        range_np = (range_np * 255).astype(np.uint8)
+
 
         heatmap_cam = cv2.applyColorMap(np.uint8(255 * cam_map), cv2.COLORMAP_JET)
         heatmap_lidar = cv2.applyColorMap(np.uint8(255 * lidar_map), cv2.COLORMAP_JET)
         overlay_cam = cv2.addWeighted(img_np, 0.6, heatmap_cam, 0.4, 0)
-        overlay_lidar = cv2.addWeighted(img_np, 0.6, heatmap_lidar, 0.4, 0)
+        overlay_lidar = cv2.addWeighted(range_np, 0.6, heatmap_lidar, 0.4, 0)
         print(f"Stable: {msg.data} | Class: {classes[stable_class]} | AvgConf: {avg_conf:.3f}")
     
         combined = np.hstack([
