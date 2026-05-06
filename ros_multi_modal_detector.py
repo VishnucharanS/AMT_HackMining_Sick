@@ -245,7 +245,7 @@ class MultiModalNode(Node):
 
         stable_class = Counter(self.history).most_common(1)[0][0]
         avg_conf = sum(self.conf_history) / len(self.conf_history)
-        classes = ["clean", "caution", "dirty"]
+        classes = ["CRITICAL", "REDUCED", "CLEAN"]
 
         msg = Int32()
 
