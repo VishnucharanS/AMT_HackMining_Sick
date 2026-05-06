@@ -139,7 +139,8 @@ BASELINE CONTAMINATION NODE
 --------------------------------------------------
 
 PROJECT STRUCTURE
-'''text
+
+```text
 .
 ├── contamination_demo/          (ROS2 package)
 │   └── contamination_monitor_node.py
@@ -148,8 +149,9 @@ PROJECT STRUCTURE
 ├── ros_multi_modal_detector.py  (ML inference node)
 ├── fusion_node.py               (Fusion logic)
 ├── Dockerfile                   (Optional)
-├── README.txt
-'''
+└── README.txt
+
+
 --------------------------------------------------
 
 ROS TOPICS
@@ -234,3 +236,4 @@ AUTHORS
 - Kishore
 
 --------------------------------------------------
+```
