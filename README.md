@@ -53,7 +53,7 @@ MODEL ARCHITECTURE (ML PIPELINE)
 
 Dual-Branch Multimodal Learning:
 
-![alt text](<Model Architecute.png>)
+![alt text](<Model Architecutre.jpg>)
 
 - Two parallel CNN branches (dual-branch ResNet)
 - Each learns modality-specific features
