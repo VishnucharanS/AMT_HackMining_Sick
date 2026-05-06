@@ -1,162 +1,276 @@
 # AMT_HackMining_Sick
-ROS2 Multimodal Contamination Detection System
+ROS2 Multimodal Contamination Detection System 🚦
+
+![ROS2](https://img.shields.io/badge/ROS2-Humble-blue)
+![Python](https://img.shields.io/badge/Python-3.x-green)
+![PyTorch](https://img.shields.io/badge/PyTorch-DeepLearning-red)
+![Status](https://img.shields.io/badge/Status-Completed-success)
+
 
 --------------------------------------------------
 
-Overview
+OVERVIEW
 
-This project implements a real-time multimodal contamination detection pipeline using LiDAR, Camera, and optional ML-based inputs in ROS2. It combines sensor data and rule-based logic to estimate environmental contamination levels and outputs a unified system state.
+This project implements a real-time multimodal contamination detection pipeline using LiDAR and Camera data within a ROS2 framework. The system estimates environmental contamination levels and outputs a unified traffic-light state.
 
---------------------------------------------------
-
-System Description
-
-The system integrates:
-
-- LiDAR data → intensity-based contamination detection
-- Camera data → blur and brightness-based contamination cues
-- ML predictions → optional external model inference
-- Fusion logic → combines all inputs into a final state
-
-Final output is a traffic-light style status:
-- NORMAL
-- REDUCED
-- CRITICAL
+The pipeline combines:
+- Sensor-based perception (LiDAR + Camera)
+- Deep learning-based multimodal classification
+- Rule-based statistical fusion for robust real-time decisions
 
 --------------------------------------------------
 
-Architecture
+FINAL OUTPUT STATES
 
-LiDAR Node ─┐
-            ├──► Contamination Monitor ───► Fusion Node ───► Final Output
-Camera Node ─┘
+- NORMAL (Clean)
+- REDUCED (Moderate contamination)
+- CRITICAL (Severe contamination)
 
-(Optional)
-ML Node ────────────────────────────────┘
+Published as:
+- /contamination_status (String)
+- /trafic_light_color_raw (Int32)
 
 --------------------------------------------------
 
-Project Structure
+FULL SYSTEM ARCHITECTURE
+
+                +-------------------+
+                |   LiDAR Sensor    |
+                +-------------------+
+                         |
+                         v
+                +-------------------+
+                |  LiDAR Processing |
+                +-------------------+
+
+                +-------------------+
+                |   Camera Sensor   |
+                +-------------------+
+                         |
+                         v
+                +-------------------+
+                | Camera Processing |
+                +-------------------+
+
+                         |
+                         v
+        +-------------------------------------+
+        |  Contamination Monitor Node (Rule)  |
+        |  (Baseline + Sensor Logic)          |
+        +-------------------------------------+
+
+                         |
+                         v
+        +-------------------------------------+
+        |     ML Node (Multimodal Model)      |
+        |  (My Model - Optional Integration)  |
+        +-------------------------------------+
+
+                         |
+                         v
+        +-------------------------------------+
+        |          Fusion Node                |
+        | (Statistical + Temporal Logic)      |
+        +-------------------------------------+
+
+                         |
+                         v
+                +-------------------+
+                |   Final Output    |
+                | Traffic Light     |
+                +-------------------+
+
+--------------------------------------------------
+
+MODEL ARCHITECTURE (ML PIPELINE)
+
+Dual-Branch Multimodal Learning:
+
+        LiDAR Range Image ──► ResNet Branch ──┐
+                                              ├──► Feature Fusion ──► Classifier
+        Camera Image      ──► ResNet Branch ──┘
+
+- Two parallel CNN branches (dual-branch ResNet)
+- Each learns modality-specific features
+- Late fusion at feature level
+- Output: contamination class (Clean / Caution / Dirty)
+
+--------------------------------------------------
+
+MY CONTRIBUTIONS
+
+1. DATA EXTRACTION (extractor.py)
+
+- Parsed ROS2 bag files using rosbag2_py
+- Extracted synchronized:
+  - LiDAR PointCloud2
+  - Camera images
+- Converted LiDAR → Range Images:
+  - Spherical projection (azimuth, elevation)
+  - Generated dense 2D representation
+- Applied preprocessing:
+  - Resizing (224×224)
+  - Normalization
+  - Orientation correction (flip)
+- Generated structured dataset:
+  - 12,000+ labeled samples
+  - Classes: clean / caution / dirty
+
+--------------------------------------------------
+
+2. MODEL TRAINING (train.py)
+
+- Designed dual-branch ResNet-based architecture
+- Parallel feature learning for:
+  - LiDAR range images
+  - Camera images
+- Implemented:
+  - Late fusion for multimodal representation
+  - Classification head for contamination states
+- Trained on extracted dataset
+- Validated using:
+  - Grad-CAM for interpretability
+  - Verified model attention regions
+
+--------------------------------------------------
+
+3. ML INFERENCE NODE (ros_multi_modal_detector.py)
+
+- Integrated trained model into ROS pipeline
+- Real-time inference on incoming sensor data
+- Outputs prediction scores for fusion
+
+--------------------------------------------------
+
+4. FUSION LOGIC (fusion_node.py)
+
+- Combined:
+  - LiDAR rule-based score
+  - Camera score
+  - ML prediction
+- Implemented:
+  - Weighted fusion
+  - Temporal smoothing (sliding window)
+  - Consensus logic
+  - State machine transitions
+  - Cooldown mechanism to avoid flickering
+- Output mapped to traffic-light states
+
+--------------------------------------------------
+
+BASELINE CONTAMINATION NODE
+
+- Rule-based LiDAR + Camera contamination estimation
+- Includes:
+  - Intensity thresholds (LiDAR)
+  - Blur + brightness (Camera)
+- For full details, refer to:
+  (Add hyperlink to original author's GitHub here)
+
+--------------------------------------------------
+
+PROJECT STRUCTURE
 
 .
 ├── contamination_demo/          (ROS2 package)
-├── fusion_node.py              (Fusion logic node)
-├── ros_multi_modal_detector.py (ML-based detector)
-├── Dockerfile                  (if used)
+│   └── contamination_monitor_node.py
+├── extractor.py                 (Data extraction)
+├── train.py                     (Model training)
+├── ros_multi_modal_detector.py  (ML inference node)
+├── fusion_node.py               (Fusion logic)
+├── Dockerfile                   (Optional)
 ├── README.txt
 
 --------------------------------------------------
 
-Features
-
-- Real-time ROS2 node-based architecture
-- Sensor fusion with weighted scoring
-- Temporal smoothing and consensus logic
-- State machine with cooldown handling
-- Robust fallback when one sensor is unavailable
-- Traffic light output for downstream systems
-
---------------------------------------------------
-
-How It Works
-
-1. LiDAR Processing
-   - Extracts intensity values from PointCloud2
-   - Computes contamination score using thresholds
-
-2. Camera Processing
-   - Converts image to grayscale
-   - Uses Laplacian variance (blur detection)
-   - Combines with brightness
-
-3. Fusion Logic
-   - Weighted combination:
-     fused = 0.65 * lidar + 0.35 * camera
-   - Applies rules such as:
-     - Sensor dominance
-     - Dust escalation
-     - Confidence smoothing
-
-4. State Machine
-   - Handles transitions between NORMAL, REDUCED, and CRITICAL
-   - Uses time-window consensus and cooldown to prevent flickering
-
---------------------------------------------------
-
-ROS Topics
+ROS TOPICS
 
 Subscribed:
 - /lidar/cloud/device_id47
 - /visionary2/bgr/device_id4
 
 Published:
-- /contamination_status (String)
-  Values: NORMAL / REDUCED / CRITICAL
-
-- /trafic_light_color_raw (Int32)
-  2 = NORMAL
-  3 = REDUCED
-  1 = CRITICAL
+- /contamination_status
+- /trafic_light_color_raw
 
 --------------------------------------------------
 
-How to Run
+HOW TO RUN
 
-1. Build workspace
+1. Build workspace:
    colcon build
    source install/setup.bash
 
-2. Run contamination node
+2. Run contamination node:
    ros2 run contamination_demo contamination_monitor_node
 
-3. (Optional) Run ML node
-   python ros_multi_modal_detector.py
+3. Run ML node:
+   python3 ros_multi_modal_detector.py
 
-4. Play data (if using rosbag)
-   ros2 bag play <your_bag_file>
+4. Run fusion node:
+   python3 fusion_node.py
+
+5. Play rosbag:
+   ros2 bag play <bag_file>
 
 --------------------------------------------------
 
-Requirements
+REQUIREMENTS
 
-- ROS2 (Humble or newer recommended)
+- ROS2 (Humble+)
 - Python 3
 - NumPy
 - OpenCV
-- PyTorch (for ML node)
+- PyTorch
 
-Install dependencies:
+Install:
 pip install numpy opencv-python torch torchvision
 
 --------------------------------------------------
 
-Notes
+RESULTS
 
-- Do not upload the following folders:
+- Real-time contamination detection pipeline
+- Multimodal learning improves robustness
+- Stable outputs via temporal + rule-based fusion
+
+--------------------------------------------------
+
+PLACEHOLDERS (TO ADD)
+
+- Demo Video: [Add Link]
+- Grad-CAM Visualizations: [Add Images]
+- Project Presentation (PPT): [Add Link]
+
+--------------------------------------------------
+
+NOTES
+
+- Ignore folders:
   build/
   install/
   log/
   venv/
 
-- Ensure ROS topics are actively publishing (e.g., using rosbag)
-- ROS logger may suppress repeated messages; use print() for debugging if needed
+- Ensure active ROS topics (use rosbag if needed)
 
 --------------------------------------------------
 
-Future Improvements
+FUTURE IMPROVEMENTS
 
-- Dynamic threshold tuning
-- Improved ML integration
-- Visualization dashboard (RViz or web UI)
-- ROS2 launch file for full pipeline
+- Sensor calibration (LiDAR ↔ Camera alignment)
+- Better temporal synchronization
+- Higher resolution range representations
+- End-to-end fusion learning (deep fusion)
+- Visualization dashboard
 
 --------------------------------------------------
 
-Author
+AUTHORS
 
-Vishnucharan
-Utkarsh Anand
-Saimothish
-Kishore 
+- Vishnucharan (ML Pipeline, Extraction, Fusion)
+- Utkarsh Anand
+- Saimothish
+- Kishore
 
 --------------------------------------------------
