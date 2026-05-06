@@ -139,7 +139,7 @@ BASELINE CONTAMINATION NODE
 --------------------------------------------------
 
 PROJECT STRUCTURE
-
+'''text
 .
 ├── contamination_demo/          (ROS2 package)
 │   └── contamination_monitor_node.py
@@ -149,7 +149,7 @@ PROJECT STRUCTURE
 ├── fusion_node.py               (Fusion logic)
 ├── Dockerfile                   (Optional)
 ├── README.txt
-
+'''
 --------------------------------------------------
 
 ROS TOPICS
@@ -201,13 +201,6 @@ RESULTS
 - Real-time contamination detection pipeline
 - Multimodal learning improves robustness
 - Stable outputs via temporal + rule-based fusion
-
---------------------------------------------------
-
-
-
-- Grad-CAM Visualizations: [Add Images]
-- Project Presentation (PPT): [Add Link]
 
 --------------------------------------------------
 
