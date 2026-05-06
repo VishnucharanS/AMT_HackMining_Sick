@@ -1,7 +1,7 @@
 # AMT_HackMining_Sick
 ROS2 Multimodal Contamination Detection System 🚦
 
-![ROS2](https://img.shields.io/badge/ROS2-Humble-blue)
+![ROS2](https://img.shields.io/badge/ROS2-Kilted-blue)
 ![Python](https://img.shields.io/badge/Python-3.x-green)
 ![PyTorch](https://img.shields.io/badge/PyTorch-DeepLearning-red)
 ![Status](https://img.shields.io/badge/Status-Completed-success)
@@ -22,63 +22,19 @@ The pipeline combines:
 
 FINAL OUTPUT STATES
 
-- NORMAL (Clean)
-- REDUCED (Moderate contamination)
-- CRITICAL (Severe contamination)
+- 🟢 NORMAL (Clean)
+- 🟡 REDUCED (Moderate contamination)
+- 🔴 CRITICAL (Severe contamination)
 
-Published as:
-- /contamination_status (String)
-- /trafic_light_color_raw (Int32)
+--------------------------------------------------
+
+DEMO VIDEO
+<video controls src="WhatsApp Video 2026-05-06 at 13.29.58.mp4" title="Title"></video>
 
 --------------------------------------------------
 
 FULL SYSTEM ARCHITECTURE
-
-                +-------------------+
-                |   LiDAR Sensor    |
-                +-------------------+
-                         |
-                         v
-                +-------------------+
-                |  LiDAR Processing |
-                +-------------------+
-
-                +-------------------+
-                |   Camera Sensor   |
-                +-------------------+
-                         |
-                         v
-                +-------------------+
-                | Camera Processing |
-                +-------------------+
-
-                         |
-                         v
-        +-------------------------------------+
-        |  Contamination Monitor Node (Rule)  |
-        |  (Baseline + Sensor Logic)          |
-        +-------------------------------------+
-
-                         |
-                         v
-        +-------------------------------------+
-        |     ML Node (Multimodal Model)      |
-        |  (My Model - Optional Integration)  |
-        +-------------------------------------+
-
-                         |
-                         v
-        +-------------------------------------+
-        |          Fusion Node                |
-        | (Statistical + Temporal Logic)      |
-        +-------------------------------------+
-
-                         |
-                         v
-                +-------------------+
-                |   Final Output    |
-                | Traffic Light     |
-                +-------------------+
+![alt text](<System Architecture.png>)
 
 --------------------------------------------------
 
@@ -86,9 +42,7 @@ MODEL ARCHITECTURE (ML PIPELINE)
 
 Dual-Branch Multimodal Learning:
 
-        LiDAR Range Image ──► ResNet Branch ──┐
-                                              ├──► Feature Fusion ──► Classifier
-        Camera Image      ──► ResNet Branch ──┘
+![alt text](<Model Architecute.png>)
 
 - Two parallel CNN branches (dual-branch ResNet)
 - Each learns modality-specific features
@@ -163,9 +117,9 @@ BASELINE CONTAMINATION NODE
 - Rule-based LiDAR + Camera contamination estimation
 - Includes:
   - Intensity thresholds (LiDAR)
-  - Blur + brightness (Camera)
-- For full details, refer to:
-  (Add hyperlink to original author's GitHub here)
+  - Blur (Laplacian variance) + brightness (Camera)
+- For full details, refer to this:
+  [Repository](https://github.com/utkarshanand140/sensor-contamination-detection-ros2)
 
 --------------------------------------------------
 
@@ -190,9 +144,8 @@ Subscribed:
 - /visionary2/bgr/device_id4
 
 Published:
-- /contamination_status
-- /trafic_light_color_raw
-
+- /contamination_status (String)
+- /trafic_light_color_raw (Int32)
 --------------------------------------------------
 
 HOW TO RUN
@@ -210,14 +163,14 @@ HOW TO RUN
 4. Run fusion node:
    python3 fusion_node.py
 
-5. Play rosbag:
+5. Play rosbag or Live sensor feed:
    ros2 bag play <bag_file>
 
 --------------------------------------------------
 
 REQUIREMENTS
 
-- ROS2 (Humble+)
+- ROS2 (Jazzy/Kilted)
 - Python 3
 - NumPy
 - OpenCV
@@ -236,9 +189,8 @@ RESULTS
 
 --------------------------------------------------
 
-PLACEHOLDERS (TO ADD)
 
-- Demo Video: [Add Link]
+
 - Grad-CAM Visualizations: [Add Images]
 - Project Presentation (PPT): [Add Link]
 
